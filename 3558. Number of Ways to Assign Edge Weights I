@@ -1,0 +1,19 @@
+class Solution:
+    def traverse(self,root,parent,depth,dic):
+        arr=[-1]
+        for con in dic[root]:
+            if con==parent:
+                continue
+            arr.append(self.traverse(con,root,depth+1,dic))
+        return max(depth,max(arr))
+    def assignEdgeWeights(self, edges: List[List[int]]) -> int:
+        dic={}
+        lar=0
+        for edge in edges:
+            dic[edge[0]]=dic.get(edge[0],set({}))
+            dic[edge[0]].add(edge[1])
+            dic[edge[1]]=dic.get(edge[1],set({}))
+            dic[edge[1]].add(edge[0])
+        lar=self.traverse(1,0,0,dic)
+        return pow(2,lar-1)%(10**9 + 7)
+        
