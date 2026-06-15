@@ -1,0 +1,43 @@
+Intuition
+Middle element was to removed so we need to count total elements
+
+Approach
+First traversed list to find no of nodes and then traversed again and stoped just before the middle node and pointed its next to next to middle one's.
+
+Complexity
+Time complexity:
+O(n)
+
+Space complexity:
+O(1) only some variable used
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode deleteMiddle(ListNode head) {
+        int n=0;
+        ListNode ptr=head;
+        while (ptr!= null){
+            n+=1;
+            ptr=ptr.next;
+        }
+        if (n==1)
+            return head.next;
+        ptr=head;
+        int count=0;
+        while (count<n/2-1){
+            ptr=ptr.next;
+            count+=1;
+        }
+        ptr.next=ptr.next.next;
+        return head;
+    }
+}
