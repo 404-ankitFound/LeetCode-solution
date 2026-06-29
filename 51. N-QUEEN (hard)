@@ -1,0 +1,46 @@
+class Solution:
+    def solveNQueens(self, n: int) -> List[List[str]]:
+        def get_ans(done,n,ans):
+            sol=[]
+            for key,val in done.items():
+                tem='.'*n
+                tem=tem[0:key]+'Q'+tem[key+1:]
+                sol.append(tem)
+            ans.append(sol)
+        def backtrack(row,done,n,ans):
+            if row==n:
+                get_ans(done,n,ans)
+                return
+            found=False
+            tdone=done.copy()
+            for i in range(n):
+                if i in done:
+                    continue
+                a=row-1
+                b=i-1
+                poss=True
+                while a>=0 and b>=0:
+                    if b in done and done[b]==a:
+                        poss=False
+                        break
+                    a-=1
+                    b-=1
+                a=row-1
+                b=i+1
+                while a>=0 and b<n:
+                    if b in done and done[b]==a:
+                        poss=False
+                        break
+                    a-=1
+                    b+=1
+                if poss==True:
+                    tdone[i]=row
+                    found=backtrack(row+1,tdone,n,ans)
+                    tdone.pop(i)
+            return found
+        ans=[]
+        for i in range(n):
+            backtrack(1,{i:0},n,ans)
+        return ans
+
+        
